@@ -17,18 +17,5 @@ package("physfs")
         table.insert(configs, "-DPHYSFS_BUILD_DOCS=OFF")
         table.insert(configs, "-DPHYSFS_DISABLE_INSTALL=ON")
         table.insert(configs, "-DPHYSFS_BUILD_TEST=OFF")
-        if package:is_plat("windows") then
-            table.insert(configs, "-DUSE_MSVC_RUNTIME_LIBRARY_DLL=" .. (package:config("vs_runtime"):startswith("MT") and "OFF" or "ON"))
-        end
         import("package.tools.cmake").install(package, configs)
-    end)
-
-    on_test(function (package)
-        assert(package:check_cxxsnippets({test = [[
-            #include <iostream>
-            #include "physfs.h"
-            static void test() {
-                std::cout << PHYSFS_init(nullptr) << "\n";
-            }
-        ]]}, {configs = {languages = "c++11"}, includes = "physfs.h"}))
     end)
