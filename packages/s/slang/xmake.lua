@@ -1,7 +1,9 @@
 package("slang")
     set_homepage("https://github.com/shader-slang/slang")
-    set_description("A portable, flexible file i/o abstraction.")
-    set_license("zlib")
+    set_description("Making it easier to work with shaders.")
+    set_license("MIT")
+
+    add_versions("v2024.1.5", "45c7d33fe87e1628de7991f46ca68f8ddd2f7e4c")
 
     add_urls("https://github.com/shader-slang/slang/archive/$(version).tar.gz",
              "https://github.com/shader-slang/slang.git")
@@ -20,5 +22,6 @@ package("slang")
         table.insert(configs, "-DSLANG_ENABLE_SLANG_GLSLANG=OFF")
         table.insert(configs, "-DSLANG_ENABLE_SLANGC=OFF")
         table.insert(configs, "-DSLANG_ENABLE_SLANGD=OFF")
+        table.insert(configs, "-DSLANG_SLANG_LLVM_FLAVOR=DISABLE")
         import("package.tools.cmake").install(package, configs)
     end)
