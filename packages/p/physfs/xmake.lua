@@ -8,8 +8,6 @@ package("physfs")
 
     -- TODO: Add configs
 
-    add_deps("cmake")
-
     on_install("macosx", "windows", "linux", "mingw", function (package)
         io.writefile("xmake.lua", [[ 
             target("physfs")
