@@ -10,8 +10,7 @@ package("slang")
 
     -- TODO: Add configs
 
-    add_deps("cmake")
-
+    add_deps("cmake", "miniz")
     on_install("macosx", "windows", "linux", "mingw", function (package)
         local configs = {}
         table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
