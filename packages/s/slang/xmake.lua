@@ -3,8 +3,6 @@ package("slang")
     set_description("Making it easier to work with shaders.")
     set_license("MIT")
 
-    add_versions("v2024.1.5", "45c7d33fe87e1628de7991f46ca68f8ddd2f7e4c")
-
     add_urls("https://github.com/shader-slang/slang/archive/$(version).tar.gz",
              "https://github.com/shader-slang/slang.git")
 
@@ -12,6 +10,7 @@ package("slang")
 
     add_deps("cmake", "miniz")
     on_install("macosx", "windows", "linux", "mingw", function (package)
+        print(package:sourcehash())
         local configs = {}
         table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
         table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
