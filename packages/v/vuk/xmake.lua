@@ -1,4 +1,4 @@
-package("slang")
+package("vuk")
     set_homepage("https://github.com/martty/vuk")
     set_description("A rendergraph-based abstraction for Vulkan")
     set_license("MIT")
