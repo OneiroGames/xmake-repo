@@ -11,12 +11,11 @@ package("vuk")
     add_deps("cmake")
 
     on_install("macosx", "windows", "linux", "mingw", function (package)
-        os.exec("git submodule init")
-        os.exec("git submodule update --recursive")
         local configs = {}
         table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
         table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
         table.insert(configs, "-DVUK_USE_SHADERC =OFF")
         table.insert(configs, "-DVUK_USE_DXC=OFF")
         import("package.tools.cmake").install(package, configs)
+        os.cp("include", package:installdir())
     end)
