@@ -8,8 +8,6 @@ package("vuk")
 
     -- TODO: Add configs
 
-    add_deps("cmake")
-
     on_install("macosx", "windows", "linux", "mingw", function (package)
         for _, file in ipairs(os.files("include/vuk/*.hpp")) do
             io.replace(file, "../src/", "")
@@ -17,9 +15,7 @@ package("vuk")
         io.replace("src/Program.cpp", "#include <spirv_cross.hpp>", "#include <spirv_cross/spirv_cross.hpp>")
         os.cp("src/CreateInfo.hpp", "include/vuk/")
         
-        local contextFile = io.open("src/Context.cpp", "a+")
-        contextFile:write("#include <locale>")
-        contextFile:close()
+        
         
         local xmake_lua = [[
             add_rules("mode.debug", "mode.release")
