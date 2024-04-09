@@ -18,7 +18,8 @@ package("vuk")
         local contextFile = io.open("src/Context.cpp", "rw")
         local contextFileData = contextFile:read("*a")
         contextFile:seek("set")
-        contextFile:write("#include <locale>" .. contextFileData)
+        contextFile:write("#include <locale>\n")
+        contextFile:write(contextFileData)
         contextFile:close()
         
         local xmake_lua = [[
