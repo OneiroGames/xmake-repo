@@ -16,6 +16,12 @@ package("vuk")
         end
         io.replace("src/Program.cpp", "#include <spirv_cross.hpp>", "#include <spirv_cross/spirv_cross.hpp>")
         os.cp("src/CreateInfo.hpp", "include/vuk/")
+        local file = io.open("src/Context.cpp", "a+")
+            file:write([[
+            #include <locale>
+            ]])
+            file:close()
+        end
         local xmake_lua = [[
             add_rules("mode.debug", "mode.release")
             add_requires("plf_colony", "robin-hood-hashing", "fmt", "concurrentqueue", "vulkan-memory-allocator", "vulkansdk", "spirv-cross", {configs = {shared = true}})
