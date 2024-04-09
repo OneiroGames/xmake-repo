@@ -26,7 +26,7 @@ package("vuk")
                 add_files("src/*.cpp")
                 add_defines("VUK_USE_SHADERC=0", "VUK_USE_DXC=0")
                 add_defines("NOMINMAX", "VC_EXTRALEAN", "WIN32_LEAN_AND_MEAN", "_CRT_SECURE_NO_WARNINGS", "_SCL_SECURE_NO_WARNINGS", "_SILENCE_CLANG_CONCEPTS_MESSAGE", "_SILENCE_CXX23_ALIGNED_STORAGE_DEPRECATION_WARNING", {public = true})
-                add_packages("plf_colony", "hood", "fmt", "concurrentqueue", "vulkan-memory-allocator", "vulkansdk", "spirv-cross", {public = true})
+                add_packages("plf_colony", "robin-hood-hashing", "fmt", "concurrentqueue", "vulkan-memory-allocator", "vulkansdk", "spirv-cross", {public = true})
         ]]
         io.writefile("xmake.lua", xmake_lua)
         import("package.tools.xmake").install(package)
