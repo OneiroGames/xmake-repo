@@ -8,6 +8,8 @@ package("vuk")
 
     -- TODO: Add configs
 
+    add_requires("plf_colony", "robin-hood-hashing", "fmt", "concurrentqueue", "vulkan-memory-allocator", "vulkansdk", "spirv-cross", {configs = {shared = true}})
+
     on_install("macosx", "windows", "linux", "mingw", function (package)
         for _, file in ipairs(os.files("include/vuk/*.hpp")) do
             io.replace(file, "../src/", "")
@@ -28,6 +30,17 @@ package("vuk")
                 add_defines("VUK_USE_SHADERC=0", "VUK_USE_DXC=0")
                 add_defines("NOMINMAX", "VC_EXTRALEAN", "WIN32_LEAN_AND_MEAN", "_CRT_SECURE_NO_WARNINGS", "_SCL_SECURE_NO_WARNINGS", "_SILENCE_CLANG_CONCEPTS_MESSAGE", "_SILENCE_CXX23_ALIGNED_STORAGE_DEPRECATION_WARNING", "DOCTEST_CONFIG_DISABLE", {public = true})
                 add_packages("plf_colony", "robin-hood-hashing", "fmt", "concurrentqueue", "vulkan-memory-allocator", "vulkansdk", "spirv-cross", {public = true})
+            after_build(function (target)
+                if (is_plat("windows")) then
+                    for _, pkg in ipairs(target:orderpkgs()) do 
+                        for _, dllpath in ipairs(table.wrap(pkg:get("libfiles"))) do
+                            if dllpath:endswith(".dll") then
+                                os.vcp(dllpath, target:targetdir()) 
+                            end 
+                        end
+                    end
+                end
+            end)
         ]]
         io.writefile("xmake.lua", xmake_lua)
         import("package.tools.xmake").install(package)
