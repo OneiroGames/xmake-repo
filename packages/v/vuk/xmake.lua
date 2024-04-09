@@ -14,6 +14,7 @@ package("vuk")
         for _, file in ipairs(os.files("include/vuk/*.hpp")) do
             io.replace(file, "../src/", "")
         end
+        io.replace("src/Program.cpp", "#include <spirv_cross.hpp>", "#include <spirv_cross/spirv_cross.hpp>")
         os.cp("src/CreateInfo.hpp", "include/vuk/")
         local xmake_lua = [[
             add_rules("mode.debug", "mode.release")
