@@ -15,7 +15,9 @@ package("vuk")
         io.replace("src/Program.cpp", "#include <spirv_cross.hpp>", "#include <spirv_cross/spirv_cross.hpp>")
         os.cp("src/CreateInfo.hpp", "include/vuk/")
         
-        
+        local contextFile = io.open("src/Context.cpp", "a+")
+        contextFile:write("#include <locale>")
+        contextFile:close()
         
         local xmake_lua = [[
             add_rules("mode.debug", "mode.release")
