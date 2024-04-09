@@ -15,11 +15,9 @@ package("vuk")
         io.replace("src/Program.cpp", "#include <spirv_cross.hpp>", "#include <spirv_cross/spirv_cross.hpp>")
         os.cp("src/CreateInfo.hpp", "include/vuk/")
         
-        local contextFile = io.open("src/Context.cpp", "rw")
-        local contextFileData = contextFile:read("*a")
+        local contextFile = io.open("src/Context.cpp", "a")
         contextFile:seek("set")
         contextFile:write("#include <locale>\n")
-        contextFile:write(contextFileData)
         contextFile:close()
         
         local xmake_lua = [[
