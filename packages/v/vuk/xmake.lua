@@ -11,6 +11,10 @@ package("vuk")
     add_deps("cmake")
 
     on_install("macosx", "windows", "linux", "mingw", function (package)
+        for _, file in ipairs(os.files("include/vuk/*.hpp")) do
+            io.replace(file, "../src/", "")
+        end
+        os.cp("src/CreateInfo.hpp", "include/vuk/")
         local configs = {}
         table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:debug() and "Debug" or "Release"))
         table.insert(configs, "-DBUILD_SHARED_LIBS=" .. (package:config("shared") and "ON" or "OFF"))
@@ -18,4 +22,5 @@ package("vuk")
         table.insert(configs, "-DVUK_USE_DXC=OFF")
         import("package.tools.cmake").install(package, configs)
         os.cp("include", package:installdir())
+        os.cp("src/CreateInfo.hpp", package:installdir() .. "include/vuk/")
     end)
