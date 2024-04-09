@@ -16,6 +16,7 @@ package("vuk")
         os.cp("src/CreateInfo.hpp", "include/vuk/")
         
         local contextFile = io.open("src/Context.cpp", "w")
+        contextFile:seek("set")
         contextFile:write("#include <locale>")
         contextFile:close()
         
