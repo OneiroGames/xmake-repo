@@ -15,10 +15,22 @@ package("vuk")
         io.replace("src/Program.cpp", "#include <spirv_cross.hpp>", "#include <spirv_cross/spirv_cross.hpp>")
         os.cp("src/CreateInfo.hpp", "include/vuk/")
         
-        local contextFile = io.open("src/Context.cpp", "a+")
-        contextFile:seek("set")
-        contextFile:write("#include <locale>\n")
-        contextFile:close()
+        local out = io.open("src/Context.cpp", "r")
+        local lines = {}
+        for line in f:lines() do
+            table.insert(lines, line)
+        end
+        out:close()
+        table.insert(lines, 1, "#include <locale>\n")
+        
+        local out = io.open("src/Context.tmp", "w")
+        for _, line in ipairs(lines) do
+            out:write(line)
+        end
+        out:close()
+        
+        os.remove("src/Context.cpp")
+        os.rename("src/Context.tmp", "src/Context.cpp")
         
         local xmake_lua = [[
             add_rules("mode.debug", "mode.release")
