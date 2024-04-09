@@ -15,9 +15,10 @@ package("vuk")
         io.replace("src/Program.cpp", "#include <spirv_cross.hpp>", "#include <spirv_cross/spirv_cross.hpp>")
         os.cp("src/CreateInfo.hpp", "include/vuk/")
         
-        local contextFile = io.open("src/Context.cpp", "w")
+        local contextFile = io.open("src/Context.cpp", "rw")
+        local contextFileData = contextFile:read("*a")
         contextFile:seek("set")
-        contextFile:write("#include <locale>")
+        contextFile:write("#include <locale>" .. contextFileData)
         contextFile:close()
         
         local xmake_lua = [[
@@ -30,7 +31,7 @@ package("vuk")
                 add_headerfiles("include/vuk/*.hpp")
                 add_files("src/*.cpp")
                 add_defines("VUK_USE_SHADERC=0", "VUK_USE_DXC=0")
-                add_defines("NOMINMAX", "VC_EXTRALEAN", "WIN32_LEAN_AND_MEAN", "_CRT_SECURE_NO_WARNINGS", "_SCL_SECURE_NO_WARNINGS", "_SILENCE_CLANG_CONCEPTS_MESSAGE", "_SILENCE_CXX23_ALIGNED_STORAGE_DEPRECATION_WARNING", {public = true})
+                add_defines("NOMINMAX", "VC_EXTRALEAN", "WIN32_LEAN_AND_MEAN", "_CRT_SECURE_NO_WARNINGS", "_SCL_SECURE_NO_WARNINGS", "_SILENCE_CLANG_CONCEPTS_MESSAGE", "_SILENCE_CXX23_ALIGNED_STORAGE_DEPRECATION_WARNING", "DOCTEST_CONFIG_DISABLE", {public = true})
                 add_packages("plf_colony", "robin-hood-hashing", "fmt", "concurrentqueue", "vulkan-memory-allocator", "vulkansdk", "spirv-cross", {public = true})
         ]]
         io.writefile("xmake.lua", xmake_lua)
