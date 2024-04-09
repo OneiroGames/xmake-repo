@@ -8,8 +8,6 @@ package("vuk")
 
     -- TODO: Add configs
 
-    add_requires("plf_colony", "robin-hood-hashing", "fmt", "concurrentqueue", "vulkan-memory-allocator", "vulkansdk", "spirv-cross", {configs = {shared = true}})
-
     on_install("macosx", "windows", "linux", "mingw", function (package)
         for _, file in ipairs(os.files("include/vuk/*.hpp")) do
             io.replace(file, "../src/", "")
@@ -20,7 +18,7 @@ package("vuk")
         
         local xmake_lua = [[
             add_rules("mode.debug", "mode.release")
-            add_requires("plf_colony", "robin-hood-hashing", "fmt", "concurrentqueue", "vulkan-memory-allocator", "vulkansdk", "spirv-cross", {configs = {shared = true}})
+            add_requires("plf_colony", "robin-hood-hashing", "fmt", "concurrentqueue", "vulkan-memory-allocator", "vulkansdk", "spirv-cross")
             target("vuk")
                 set_languages("c++20")
                 set_kind("static")
