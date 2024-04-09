@@ -15,7 +15,7 @@ package("vuk")
         io.replace("src/Program.cpp", "#include <spirv_cross.hpp>", "#include <spirv_cross/spirv_cross.hpp>")
         os.cp("src/CreateInfo.hpp", "include/vuk/")
         
-        local contextFile = io.open("src/Context.cpp", "a+")
+        local contextFile = io.open("src/Context.cpp", "w")
         contextFile:write("#include <locale>")
         contextFile:close()
         
